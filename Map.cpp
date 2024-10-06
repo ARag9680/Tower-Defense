@@ -1,73 +1,102 @@
 #include "Map.h"
-#include <SFML/Window.hpp>
+#include "NPC.h"
+#include "Tower.h"
+#include <SFML/Graphics.hpp>
 #include <iostream>
 
-#include <vector>
-
-Map::Map(){
-    this->height = 48;
-    this->width = 27;
-    this->grid = new bool*[this->height];
-    for (int i=0; i<this->height; i++){
-        grid[i] = new bool[this->width];
+Map::Map(int h, int w) : height(h), width(w) {
+    // Initialize the 2D array for the grid (false = path, true = obstacle)
+    grid = new bool*[height];
+    for (int i = 0; i < height; i++) {
+        grid[i] = new bool[width];
+        for (int j = 0; j < width; j++) {
+            grid[i][j] = false; // Default all tiles to "path" (false = path, true = obstacle)
+        }
     }
 }
 
 Map::~Map() {
     // Clean up the dynamically allocated grid
-    for (int i = 0; i < height; ++i) {
+    for (int i = 0; i < height; i++) {
         delete[] grid[i];
     }
     delete[] grid;
 }
 
-void Map::loadMap() {
+void Map::loadMap(sf::RenderWindow &window) {
 
-    // Create window
-    sf::Window window(sf::VideoMode::getDesktopMode(), "Tower Defense");
-    window.setPosition(sf::Vector2i(0,0));
+    // Initialise map layout here (true = obstacle = placeable)
 
-    while (window.isOpen()){ // Event handler
-        sf::Event event;
-        while (window.pollEvent(event)){
-            if (event.type == sf::Event::Closed){
-                window.close();
+    grid[1][1] = true;  // Example obstacle
+    grid[2][2] = true;  // Another example obstacle
+
+    // Draw the map using SFML - draw grid and obstacles
+    sf::RectangleShape tile(sf::Vector2f(20, 20));  // 20x20 pixel tiles
+    for (int i = 0; i < height; i++) {
+        for (int j = 0; j < width; j++) {
+            if (grid[i][j]) {
+                tile.setFillColor(sf::Color::Red);  // Obstacles are red (can place towers)
+            } else {
+                tile.setFillColor(sf::Color::Green);  // Paths are green (cannot place towers)
             }
+            tile.setPosition(j * 20, i * 20);  // Position based on grid indices
+            window.draw(tile);
         }
     }
-
-
 }
 
-bool Map::canPlaceTower(int x, int y) { 
-    if (!(this->isObstacle(x, y))){return false; } // if the tile is a path tile, a tower cannot be placed
+bool Map::canPlaceTower(int x, int y) {
+
+    if (x < 0 || x >= height || y < 0 || y >= width || grid[x][y] == false) {
+        return false;  // Cannot place on path tiles
+    }
     for (int i = 0; i<towers.size(); i++){
-        if ((x == towers[i].getPosition().first) && (y == towers[i].getPosition().second)){
-            return false;
+        if (towers[i].getPosition().x == x || towers[i].getPosition().y == y){
+            return false; // Cannot place on tiles that already have a tower
         }
     }
-    return true;
+    return true;  // Can place on all other tiles
 }
 
-// returns true if grid[x][y] is false (is an obstacle) and returns false if grid[x][y] is true (is a path)
-bool Map::isObstacle(int x, int y){
-    return !(this->grid[x][y]);    
-}
-
-void Map::spawnNPC(NPC npc){
-    npcs.push_back(npc); // adds the new NPC to the vector of npcs
-}
-
-void Map::placeTower(Tower tower){
-    towers.push_back(tower); // adds the new tower to the vector of towers
-}
-
-void Map::display(){
-
-    for (int i = 0; i < npcs.size(); i++){
-        NPC npc_disp = npcs[i];
+bool Map::isObstacle(int x, int y) {
+    // Return whether the tile at (x, y) is an obstacle
+    if (x < 0 || x >= height || y < 0 || y >= width) {
+        return true;  // Out of bounds
     }
-    for (int i = 0; i < towers.size(); i++){
-        Tower tower_disp = towers[i];
+    return grid[x][y];  // True if obstacle, false if path
+}
+
+void Map::spawnNPC(const NPC& npc) {
+    // Add the NPC to the NPC vector
+    npcs.push_back(npc);
+}
+
+void Map::placeTower(const Tower& tower, int x, int y) {
+    if (canPlaceTower(x, y)) {
+        // Place the tower and add it to the tower vector
+        towers.push_back(tower);
+    } else {
+        std::cout << "Cannot place tower at (" << x << ", " << y << ")." << std::endl;
+    }
+}
+
+void Map::display(sf::RenderWindow &window) {
+    // Draw the map
+    loadMap(window);
+
+    // Draw NPCs
+    for (int i = 0; i < npcs.size(); i++) {
+        npcs[i].move();      // Move the NPC (simple movement logic)
+        npcs[i].draw(window);  // Draw the NPC on the screen
+    }
+
+    // Draw Towers
+    for (int i = 0; i < towers.size(); i++) {
+        // Draw each tower as a circle on the grid at the tower's position
+        sf::CircleShape towerShape(10);  // Tower is a circle with radius 10
+        towerShape.setFillColor(sf::Color::Yellow);  // Color the tower yellow
+        towerShape.setPosition(towers[i].getPosition());  // Set the position of the tower
+
+        window.draw(towerShape);  // Draw the tower shape on the window
     }
 }

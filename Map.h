@@ -1,30 +1,32 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include "NPC.h"
-#include "Tower.h"
+#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
-
+#include <SFML/System.hpp>
 #include <vector>
-using namespace std;
+
+class NPC;
+class Tower;
 
 class Map {
-    private:
-        // Dimensions of map
-        int height;
-        int width;
-        bool** grid; // 2D array of booleans - represents whether each tile is a path (true) or obstacle (false)
-        vector<NPC> npcs; // Vector storing all NPC objects
-        vector<Tower> towers; // Vector storing all Tower objects
-    public:
-        Map();
-        ~Map();
-        void loadMap();
-		bool canPlaceTower(int x, int y);
-		bool isObstacle(int x, int y);
-		void spawnNPC(NPC npc);
-		void placeTower(Tower tower);
-		void display();
+private:
+    int height;
+    int width;
+    bool** grid;                      // 2D array of booleans for map tiles (true = obstacle, false = path)
+    std::vector<NPC> npcs;            // Vector of NPCs on the map
+    std::vector<Tower> towers;        // Vector of Towers placed on the map
+
+public:
+    Map(int h, int w);
+    ~Map();                           // Destructor to free the dynamically allocated grid
+
+    void loadMap(sf::RenderWindow &window);  // Loads the map using SFML
+    bool canPlaceTower(int x, int y);        // Checks if a tower can be placed at (x, y)
+    bool isObstacle(int x, int y);           // Checks if (x, y) is an obstacle
+    void spawnNPC(const NPC& npc);           // Adds an NPC to the map
+    void placeTower(const Tower& tower, int x, int y); // Places a tower at (x, y)
+    void display(sf::RenderWindow &window);  // Displays the map, NPCs, and Towers using SFML
 };
 
 #endif

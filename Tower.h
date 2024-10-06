@@ -1,14 +1,22 @@
+// INCOMPLETE
+
 #ifndef TOWER_H
 #define TOWER_H
 
-#include <utility>
+#include <SFML/Graphics.hpp>
 
-class Tower{
-    protected:
-        std::pair<int, int> position;
+class Tower {
+private:
+    sf::Vector2f position;  // Position of the tower
+    int damage;
+    float attackSpeed;
 
-    public:
-        std::pair<int, int> getPosition(){return position;};
+public:
+    Tower(int damage, float attackSpeed, sf::Vector2f position);
+
+    sf::Vector2f getPosition() const;  // Get the position of the tower
+    int getDamage() const;
+    float getAttackSpeed() const;
 };
 
 #endif
