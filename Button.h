@@ -22,5 +22,6 @@ class Button {
         void setColor(const Color& color);
         static bool loadFont(const string& fontPath); 
         string getText();
+        ~Button();
 };
 #endif /* BUTTON_H */

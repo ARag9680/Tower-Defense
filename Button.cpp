@@ -42,3 +42,6 @@ void Button::setColor(const Color& color) {
 string Button::getText(){
     return buttonText.getString();
 }
+Button::~Button(){
+    
+}

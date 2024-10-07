@@ -24,5 +24,7 @@ class Main_Menu{
         // void viewSettings();
         void draw(RenderWindow& window);
         void handleMouseHover(Vector2i mousePos);
+        void initalizeButtons();
+        ~Main_Menu();
 };
 #endif /* MAIN_MENU_H */

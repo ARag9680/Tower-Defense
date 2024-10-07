@@ -1,5 +1,9 @@
 #include "Main_Menu.h"
 Main_Menu::Main_Menu(){
+    initalizeButtons();
+}
+
+void Main_Menu::initalizeButtons(){
     Button Start_Game("Start Game", 412,184);
     Start_Game.loadFont("Arial.ttf");
     buttons.push_back(Start_Game);
@@ -19,30 +23,31 @@ void Main_Menu::handleClick(Vector2i mousePos, Event mouseButtonPressed, RenderW
                 if (button.getText() == "Start Game")
                 {
                     cout << button.getText() << " was left clicked" << endl;
-                    
+                    buttons.clear();
                 }
                 if (button.getText() == "Instructions")
                 {
                     cout << button.getText() << " was left clicked" << endl;
+                    buttons.clear();
+                    Button Back("Back", 0, 0);
+                    buttons.push_back(Back);
                 }
                 if (button.getText() == "Settings")
                 {
                     cout << button.getText() << " was left clicked" << endl;
+                    buttons.clear();
+                }
+                if (button.getText() == "Back"){
+                    buttons.clear();
+                    initalizeButtons();
                 }
             }
         }
     }
 }
 
-// void Main_Menu::viewInstructions(){
-
-// }
-// void Main_Menu::viewSettings(){
-
-// }
-
 void Main_Menu::draw(RenderWindow& window) {
-    //cout << "Drawing Main Menu in Window" << endl;
+    cout << "Drawing Main Menu in Window" << endl;
     for (auto& button : buttons) {
         button.draw(window);
     }
@@ -55,4 +60,9 @@ void Main_Menu::handleMouseHover(Vector2i mousePos) {
             button.setColor(Color::Blue); // Default color
         }
     }
+}
+
+Main_Menu::~Main_Menu(){
+        // Destructor to clean up memory
+        buttons.clear();
 }
