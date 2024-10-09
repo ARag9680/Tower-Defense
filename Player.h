@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <string>
+#include "Map.h"
 
 class Player {
     private:
