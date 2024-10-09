@@ -7,6 +7,8 @@
 #include <vector>
 #include <string>
 #include "Button.h"
+#include "Map.h"
+
 using namespace std;
 using namespace sf;
 
@@ -16,15 +18,23 @@ class Main_Menu{
         string instructionsTitle;
         string settingsTitle;
         bool isButtonSelected;
+        bool gameStarted;
         vector<Button> buttons;
+        Map* maps;
     public:
         Main_Menu();
+
+        bool isGameStarted();
+        
         void handleClick(Vector2i mousePos, Event mouseButtonPressed, RenderWindow& window);
-        // void viewInstructions();
-        // void viewSettings();
-        void draw(RenderWindow& window);
         void handleMouseHover(Vector2i mousePos);
+
+        void draw(RenderWindow& window);
+        void drawMaps(RenderWindow& window);
+
         void initalizeButtons();
+        void initalizeMap();
+
         ~Main_Menu();
 };
 #endif /* MAIN_MENU_H */

@@ -1,9 +1,9 @@
-#include "Button.h"
 #include "Main_Menu.h"
+
 int main(){
     // Create a window object
-    RenderWindow window(VideoMode(1024, 768), "SFML Window");
-    cout << "Window Drawn" << endl;
+    RenderWindow window(VideoMode(1024, 768), "SFML Window"); //We can change this to whatever suits.
+    cout << "SFML Window Drawn" << endl;
     //Create Main Menu;
     Main_Menu Main_Window;
     
@@ -14,8 +14,8 @@ int main(){
         Vector2i mousePos = Mouse::getPosition(window);
         Event event;
         
-        Main_Window.handleMouseHover(mousePos);
-        Main_Window.handleClick(mousePos, event, window);
+        Main_Window.handleMouseHover(mousePos); //Shows user that the button is actively being hovered over.
+        Main_Window.handleClick(mousePos, event, window); //Handles all clicks on buttons.
         
         while (window.pollEvent(event))
         {
@@ -23,13 +23,16 @@ int main(){
             if (event.type == Event::Closed)
                 window.close();
         }
-        //cout << "Window Color White" << endl;
-        // Clear the window with a black color
-        window.clear(Color::White);
+
+        window.clear(Color::White); //Setting window to white before drawing on top of
 
         //Draw objects onto the screen
-        Main_Window.draw(window);
-    
+        if (Main_Window.isGameStarted()) {  // This is a bool tracking whether the game has started before drawing
+            cout<< "Drawing Maps" <<endl;
+            Main_Window.drawMaps(window);  //  Draw the map after Start game has been pressed.
+        } else {
+            Main_Window.draw(window);  // Draw the main menu (buttons) if game is not started.
+        }
         // Display what was drawn
         
         window.display();
