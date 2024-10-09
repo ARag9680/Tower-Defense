@@ -5,6 +5,10 @@
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <vector>
+#include <iostream>
+#include <string>
+using namespace std;
+using namespace sf;
 
 class NPC;
 class Tower;
@@ -21,12 +25,12 @@ public:
     Map(int h, int w);
     ~Map();                           // Destructor to free the dynamically allocated grid
 
-    void loadMap(sf::RenderWindow &window);  // Loads the map using SFML
+    void loadMap(RenderWindow &window);  // Loads the map using SFML
     bool canPlaceTower(int x, int y);        // Checks if a tower can be placed at (x, y)
     bool isObstacle(int x, int y);           // Checks if (x, y) is an obstacle
     void spawnNPC(const NPC& npc);           // Adds an NPC to the map
     void placeTower(const Tower& tower, int x, int y); // Places a tower at (x, y)
-    void display(sf::RenderWindow &window);  // Displays the map, NPCs, and Towers using SFML
+    void display(RenderWindow &window);  // Displays the map, NPCs, and Towers using SFML
 };
 
 #endif

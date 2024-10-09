@@ -2,10 +2,10 @@
 
 #include "Tower.h"
 
-Tower::Tower(int damage, float attackSpeed, sf::Vector2f position) 
+Tower::Tower(int damage, float attackSpeed, Vector2f position) 
     : damage(damage), attackSpeed(attackSpeed), position(position) {}
 
-sf::Vector2f Tower::getPosition() const {
+Vector2f Tower::getPosition() const {
     return position;
 }
 

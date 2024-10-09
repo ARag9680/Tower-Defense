@@ -1,8 +1,7 @@
 #include "Map.h"
 #include "NPC.h"
 #include "Tower.h"
-#include <SFML/Graphics.hpp>
-#include <iostream>
+
 
 Map::Map(int h, int w) : height(h), width(w) {
     // Initialize the 2D array for the grid (false = path, true = obstacle)
@@ -23,7 +22,7 @@ Map::~Map() {
     delete[] grid;
 }
 
-void Map::loadMap(sf::RenderWindow &window) {
+void Map::loadMap(RenderWindow &window) {
 
     // Initialise map layout here (true = obstacle = placeable)
 
@@ -31,13 +30,13 @@ void Map::loadMap(sf::RenderWindow &window) {
     grid[2][2] = true;  // Another example obstacle
 
     // Draw the map using SFML - draw grid and obstacles
-    sf::RectangleShape tile(sf::Vector2f(20, 20));  // 20x20 pixel tiles
+    RectangleShape tile(Vector2f(20, 20));  // 20x20 pixel tiles
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width; j++) {
             if (grid[i][j]) {
-                tile.setFillColor(sf::Color::Red);  // Obstacles are red (can place towers)
+                tile.setFillColor(Color::Red);  // Obstacles are red (can place towers)
             } else {
-                tile.setFillColor(sf::Color::Green);  // Paths are green (cannot place towers)
+                tile.setFillColor(Color::Green);  // Paths are green (cannot place towers)
             }
             tile.setPosition(j * 20, i * 20);  // Position based on grid indices
             window.draw(tile);
@@ -76,11 +75,11 @@ void Map::placeTower(const Tower& tower, int x, int y) {
         // Place the tower and add it to the tower vector
         towers.push_back(tower);
     } else {
-        std::cout << "Cannot place tower at (" << x << ", " << y << ")." << std::endl;
+        cout << "Cannot place tower at (" << x << ", " << y << ")." << endl;
     }
 }
 
-void Map::display(sf::RenderWindow &window) {
+void Map::display(RenderWindow &window) {
     // Draw the map
     loadMap(window);
 
@@ -93,8 +92,8 @@ void Map::display(sf::RenderWindow &window) {
     // Draw Towers
     for (int i = 0; i < towers.size(); i++) {
         // Draw each tower as a circle on the grid at the tower's position
-        sf::CircleShape towerShape(10);  // Tower is a circle with radius 10
-        towerShape.setFillColor(sf::Color::Yellow);  // Color the tower yellow
+        CircleShape towerShape(10);  // Tower is a circle with radius 10
+        towerShape.setFillColor(Color::Yellow);  // Color the tower yellow
         towerShape.setPosition(towers[i].getPosition());  // Set the position of the tower
 
         window.draw(towerShape);  // Draw the tower shape on the window

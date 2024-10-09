@@ -2,8 +2,14 @@
 
 #ifndef NPC_H
 #define NPC_H
-
 #include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/System.hpp>
+#include <vector>
+#include <iostream>
+#include <string>
+using namespace std;
+using namespace sf;
 
 class NPC {
 private:
