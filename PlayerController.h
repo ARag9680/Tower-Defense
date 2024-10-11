@@ -2,26 +2,30 @@
 #define PLAYERCONTROLLER_H
 
 #include <string>
+#include "Player.h"
+using namespace std; 
 
 class PlayerController {
     private:
         std::string name; 
 
-
-    public: 
-
-        PlayerController(); 
-        PlayerController(std::string name); 
+        int waitForClick = 0; 
         
-        void initializeInput(); 
+    public: 
+        PlayerController(); //Default constructor 
+        PlayerController(std::string name); //Player Controller Constructor, creates instance of player
 
-        void initializePlayer(); 
+        int getWaitForClick() {
+            return waitForClick; 
+        }
 
-        void leftMousePressed(); 
-        void rightMousePressed(); 
+        int setWaitForClick(int waitForClick) {
+            this->waitForClick = waitForClick; 
+        }
 
-
-
+        void initializeInput(Player player); 
+        void leftMousePressed(Player player); //Detect left click
+        void rightMousePressed(Player player); //Detect right click
 
 };
 

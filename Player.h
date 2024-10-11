@@ -3,28 +3,28 @@
 
 #include <string>
 #include "Map.h"
+#include "Tower.h"
+using namespace std; 
 
 class Player {
     private:
         int health; 
         std::string name; 
         int currency; 
-        int level; 
         //std::vector<Tower> towers; 
+        Map *maps; 
 
     public:
-        Player(); 
-        Player(int health, std::string name, int currency); 
-        ~Player(); 
+        Player();  //Default constuctor 
+        Player(int health, std::string name, int currency);  //Player constructor - creates player with certian health, name and currency 
+        ~Player(); //Default deconstructor 
 
+        //Get value of health, currency and name
         int getHealth(); 
         int getCurrency(); 
-
-        std::string getName(); 
+        string getName(); 
 
         void buildTower(); 
-
-        //bool isHit; 
 
         void sellTower(); 
 

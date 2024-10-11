@@ -1,9 +1,10 @@
 #include "Player.h"
 #include <iostream>
 #include <SFML/Window/Mouse.hpp>
-//include "Main_Menu.h"
-//#include <SFML/Graphics.hpp>
 #include "Map.h"
+#include "Tower.h"
+
+using namespace std; 
 
 Player::Player() {}
 
@@ -17,31 +18,21 @@ int Player::getHealth() {
     return health; 
 }
 
-
-
-
 int Player::getCurrency() {
-    return currency;  
+    return currency;    
 }
 
 Player::~Player() {}
 
 void Player::buildTower() {
-        //map->placeTower(tower1, 10, 10); 
+        Tower* tower = new Tower(20, 1.0f, sf::Vector2f(200, 200)); // test tower to pass to function 
 
-       
+        if (tower != nullptr) {
+            maps->placeTower(*tower, 5, 5); 
+            //currently causes seg fault
+        }
 
-
-        //call buildtower from map
-        //placeTower(); 
-        //add to towers 
-        //currency = currency - tower price
-    
-    
-
-
-
-    
+        //currency = currency - tower price    
 }
 
 void Player::sellTower() {
