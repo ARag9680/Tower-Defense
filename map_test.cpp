@@ -2,6 +2,8 @@
 #include "Map.h"
 #include "NPC.h"
 #include "Tower.h"
+#include "Player.h"
+#include "PlayerController.h"
 
 int main() {
     // Create an SFML window
@@ -22,6 +24,9 @@ int main() {
     map.placeTower(tower1, 10, 10);  // Example tower placement
     map.placeTower(tower2, 15, 15);  // Another tower placement
 
+    PlayerController playerController("person"); //Create playerController
+    Player playerTest(10, "playerName", 60); //Create player object
+
     // Main game loop
     while (window.isOpen()) {
         sf::Event event;
@@ -30,6 +35,8 @@ int main() {
                 window.close();
             }
         }
+
+        playerController.initializeInput(playerTest); //Allow player interaction
 
         // Clear the window
         window.clear();
