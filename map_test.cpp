@@ -3,48 +3,42 @@
 #include "NPC.h"
 #include "Tower.h"
 #include "Player.h"
-#include "PlayerController.h"
+
+using namespace sf;
 
 int main() {
-    // Create an SFML window
-    sf::RenderWindow window(sf::VideoMode(800, 600), "Tower Defense");
+    RenderWindow window(VideoMode(400,400), "Tower Defense");
 
-    // Create a map object (e.g., 50x40 grid)
-    Map map(50, 40);
+    Map gameMap(20, 20);  // A 20x20 map
+    Player player(100, "Player1", 100);  // Player with health and currency
 
-    // Create some NPCs and Towers
-    NPC npc1(100, 0.5f, 10, sf::Vector2f(0, 100));  // Example NPC with health 100, speed 0.5
-    NPC npc2(150, 0.4f, 15, sf::Vector2f(0, 200));  // Another NPC at a different position
-    Tower tower1(20, 1.0f, sf::Vector2f(200, 200)); // Example Tower with damage 20
-    Tower tower2(30, 1.5f, sf::Vector2f(300, 300)); // Another Tower with different damage and position
+    // Fixed player position (could be the bottom right corner)
+    Vector2f playerPosition(400,400);  // Bottom-right of the window for example
 
-    // Place the NPCs and Towers on the map
-    map.spawnNPC(npc1);
-    map.spawnNPC(npc2);
-    map.placeTower(tower1, 10, 10);  // Example tower placement
-    map.placeTower(tower2, 15, 15);  // Another tower placement
+    // Create NPC at position (0, 0)
+    NPC enemy(100, 0.5, 10, Vector2f(0, 0), 50);
+    gameMap.spawnNPC(enemy);
 
-    PlayerController playerController("person"); //Create playerController
-    Player playerTest(10, "playerName", 60); //Create player object
-
-    // Main game loop
+    // Game loop
     while (window.isOpen()) {
-        sf::Event event;
+        Event event;
         while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed) {
+            if (event.type == Event::Closed)
                 window.close();
-            }
         }
 
-        playerController.initializeInput(playerTest); //Allow player interaction
-
-        // Clear the window
+        // Clear the window for new frame
         window.clear();
 
-        // Display the map, NPCs, and Towers
-        map.display(window);
+        // Move NPCs towards the player position using a non-const iterator
+        for (std::vector<NPC>::iterator npc_it = gameMap.getNPCs().begin(); npc_it != gameMap.getNPCs().end(); ++npc_it) {
+            npc_it->move(gameMap, playerPosition);
+        }
 
-        // Display everything on the screen
+        // Display the map and NPCs
+        gameMap.display(window);
+
+        // Display the new frame
         window.display();
     }
 

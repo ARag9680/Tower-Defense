@@ -1,28 +1,31 @@
-// INCOMPLETE
-
 #ifndef NPC_H
 #define NPC_H
+
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/System.hpp>
-#include <vector>
-#include <iostream>
 #include <string>
+
 using namespace std;
 using namespace sf;
 
+class Map;  // Forward declaration of Map
+
 class NPC {
 private:
-    sf::RectangleShape shape;  // Represents NPC as a rectangle
+    sf::CircleShape shape;  // Represents NPC as a circle
     int health;
-    float speed;
+    double speed;
     int damage;
+    Vector2f position;
+    int value;
 
 public:
-    NPC(int health, float speed, int damage, sf::Vector2f position);
-
-    void move();  // Simulates movement of the NPC
-    void draw(sf::RenderWindow& window);  // Draw the NPC on the screen
+    NPC(int health, double speed, int damage, Vector2f position, int value);
+    void move(Map& map, Vector2f playerPosition);
+    void takeDamage();
+    void draw(RenderWindow& window);
+    int getHealth() const;
+    int getValue() const;
+    ~NPC();
 };
 
 #endif
