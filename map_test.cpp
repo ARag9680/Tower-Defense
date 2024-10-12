@@ -3,6 +3,9 @@
 #include "NPC.h"
 #include "Tower.h"
 #include "Player.h"
+#include "Creep.h"
+#include "Elite.h"
+#include "Champion.h"
 
 using namespace sf;
 
@@ -15,9 +18,13 @@ int main() {
     // Fixed player position (could be the bottom right corner)
     Vector2f playerPosition(400,400);  // Bottom-right of the window for example
 
-    // Create NPC at position (0, 0)
-    NPC enemy(100, 0.5, 10, Vector2f(0, 0), 50);
-    gameMap.spawnNPC(enemy);
+    Creep example_creep(Vector2f(0,0));
+    Elite example_elite(Vector2f(0, 30));
+    Champion example_champion(Vector2f(50, 0), 2);
+
+    gameMap.spawnNPC(example_creep);
+    gameMap.spawnNPC(example_elite);
+    gameMap.spawnNPC(example_champion);
 
     // Game loop
     while (window.isOpen()) {

@@ -10,7 +10,7 @@ using namespace sf;
 class Map;  // Forward declaration of Map
 
 class NPC {
-private:
+protected:
     sf::CircleShape shape;  // Represents NPC as a circle
     int health;
     double speed;
@@ -21,7 +21,7 @@ private:
 public:
     NPC(int health, double speed, int damage, Vector2f position, int value);
     void move(Map& map, Vector2f playerPosition);
-    void takeDamage();
+    virtual void takeDamage();
     void draw(RenderWindow& window);
     int getHealth() const;
     int getValue() const;

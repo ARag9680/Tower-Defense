@@ -3,7 +3,7 @@
 
 #include <string>
 
-class Map;  // Forward declaration of Map (instead of including the full header)
+class Map;  // Forward declaration of Map
 
 using namespace std; 
 

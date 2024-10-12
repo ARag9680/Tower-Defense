@@ -16,7 +16,7 @@ Map::Map(int h, int w) : height(h), width(w) {
     grid[5][5] = true;
     grid[10][10] = true;
     grid[15][15] = true;
-    grid[15][14] = true;
+    grid[14][15] = true;
 }
 
 // Destructor

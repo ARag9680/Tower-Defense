@@ -4,9 +4,10 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
-class NPC;  // Forward declaration of NPC
-class Tower;  // Forward declaration of Tower
-class Player;  // Forward declaration of Player
+// Forward declarations to avoid #include cycles
+class NPC;
+class Tower;
+class Player;
 
 using namespace sf;
 using namespace std;

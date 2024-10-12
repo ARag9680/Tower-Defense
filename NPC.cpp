@@ -5,7 +5,7 @@
 
 NPC::NPC(int h, double s, int d, Vector2f pos, int val) 
     : health(h), speed(s), damage(d), position(pos), value(val) {
-    shape.setRadius(10.0f);  // Example radius of 10 pixels
+    shape.setRadius(8.0f);  // Example radius
     shape.setFillColor(Color::Blue);  // Set the fill color
     shape.setPosition(position);  // Set the initial position
 }
@@ -63,7 +63,7 @@ void NPC::move(Map& map, Vector2f playerPosition) {
 }
 
 void NPC::takeDamage() {
-    health -= 10;
+    health -= 1;
     if (health <= 0) {
         health = 0;
     }
