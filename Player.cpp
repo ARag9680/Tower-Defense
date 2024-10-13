@@ -22,6 +22,14 @@ int Player::getCurrency() {
     return currency;    
 }
 
+sf::Vector2f Player::getPlayerPosition(){
+    return playerPosition;
+}
+
+void Player::setPlayerPosition(Vector2f Spawn){
+    this->playerPosition = Spawn;
+}
+
 Player::~Player() {}
 
 void Player::buildTower() {

@@ -13,7 +13,7 @@ class Player {
         int currency; 
         //std::vector<Tower> towers; 
         Map *maps; 
-
+        Vector2f playerPosition;
     public:
         Player();  //Default constuctor 
         Player(int health, std::string name, int currency);  //Player constructor - creates player with certian health, name and currency 
@@ -25,6 +25,9 @@ class Player {
         string getName(); 
 
         void buildTower(); 
+        
+        Vector2f getPlayerPosition();
+        void setPlayerPosition(Vector2f Spawn);
 
         void sellTower(); 
 
