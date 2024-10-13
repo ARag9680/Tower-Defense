@@ -1,14 +1,14 @@
 #include "Map.h"
 #include "NPC.h"
-#include "Tower.h"
+#include "Towers.h"
 #include "Player.h"
 
 // Constructor
-Map::Map(int h, int w) : height(h), width(w) {
-    grid = new bool*[height];
-    for (int i = 0; i < height; i++) {
-        grid[i] = new bool[width];
-        for (int j = 0; j < width; j++) {
+Map::Map(Vector2i tiles) : tiles(tiles) {
+    grid = new bool*[tiles.y];
+    for (int i = 0; i < tiles.y; i++) {
+        grid[i] = new bool[tiles.x];
+        for (int j = 0; j < tiles.x; j++) {
             grid[i][j] = false;  // Initialize all cells as paths (false = path, true = obstacle)
         }
     }
@@ -21,22 +21,22 @@ Map::Map(int h, int w) : height(h), width(w) {
 
 // Destructor
 Map::~Map() {
-    for (int i = 0; i < height; i++) {
+    for (int i = 0; i < tiles.y; i++) {
         delete[] grid[i];
     }
     delete[] grid;
 }
 
-int Map::geWidth(){ return this->width; };
-int Map::getHeight(){ return this->height; };
+int Map::getWidth(){ return this->tiles.x; };
+int Map::getHeight(){ return this->tiles.y; };
 
 void Map::loadMap(RenderWindow &window) {
     RectangleShape tile(Vector2f(20, 20));
     tile.setOutlineThickness(1);            
     tile.setOutlineColor(Color::Black);    
 
-    for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
+    for (int i = 0; i < tiles.y; i++) {
+        for (int j = 0; j < tiles.x; j++) {
             tile.setFillColor(grid[i][j] ? Color::Red : Color::Green);
             tile.setPosition(j * 20, i * 20);
             window.draw(tile);
@@ -44,16 +44,16 @@ void Map::loadMap(RenderWindow &window) {
     }
 }
 
-bool Map::canPlaceTower(int x, int y) {
-    if (x < 0 || x >= height || y < 0 || y >= width || !grid[x][y])
+bool Map::canPlaceTower(Vector2i position) {
+    if (position.x < 0 || position.x >= tiles.y || position.y < 0 || position.y >= tiles.x || !grid[position.x][position.y])
         return false;
     return true;
 }
 
-bool Map::isObstacle(int x, int y) {
-    if (x < 0 || x >= width || y < 0 || y >= height)
+bool Map::isObstacle(Vector2i tile) {
+    if (tile.x < 0 || tile.x >= tiles.x || tile.y < 0 || tile.y >= tiles.y)
         return false;
-    return (grid[x+1][y+1] || grid[x][y+1] || grid[x+1][y]);
+    return (grid[tile.x+1][tile.y+1] || grid[tile.x][tile.y+1] || grid[tile.x+1][tile.y]);
 }
 
 void Map::spawnNPC(NPC npc) {
@@ -64,8 +64,8 @@ vector<NPC>& Map::getNPCs() {
     return npcs;
 }
 
-void Map::placeTower(Tower tower, int x, int y) {
-    if (canPlaceTower(x, y)) {
+void Map::placeTower(Tower tower, Vector2i position) {
+    if (canPlaceTower(position)) {
         towers.push_back(tower);
     }
 }
@@ -89,6 +89,11 @@ void Map::display(RenderWindow &window) {
     }
 
     for (std::vector<Tower>::iterator tower_it = towers.begin(); tower_it != towers.end(); ++tower_it) {
-        // Optionally display towers
+        tower_it->draw(window);
+        for (std::vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end(); npc_it++){
+            if (tower_it->isWithinRange(*npc_it)) {
+                tower_it->drawAttackLine(window, *npc_it);// Optionally display towers
+            }
+        }
     }
 }

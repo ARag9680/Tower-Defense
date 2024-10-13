@@ -14,52 +14,52 @@ void NPC::move(Map& map, Vector2f playerPosition) {
     Vector2f newPos = position;
 
     // Calculate direction towards the player
-    float deltaX = playerPosition.x - newPos.x;
-    float deltaY = playerPosition.y - newPos.y;
+    Vector2f delta = playerPosition - newPos;
 
     // Determine the movement step in x and y directions
-    int stepX = (deltaX > 0) ? 1 : -1;
-    int stepY = (deltaY > 0) ? 1 : -1;
+    Vector2i step((delta.x > 0) ? 1 : -1, (delta.y > 0) ? 1 : -1);
 
     // Calculate the potential next positions in both x and y
-    float nextX = newPos.x + stepX * speed;
-    float nextY = newPos.y + stepY * speed;
+    Vector2f nextPos(newPos.x + step.x * speed, newPos.y + step.y * speed);
 
     // Get the current grid coordinates and next grid coordinates
-    int gridX = static_cast<int>(newPos.x / 20);
-    int gridY = static_cast<int>(newPos.y / 20);
-    int nextGridXRight = static_cast<int>((nextX + shape.getRadius()) / 20);
-    int nextGridXLeft = static_cast<int>((nextX - shape.getRadius()) / 20);
-    int nextGridYBottom = static_cast<int>((nextY + shape.getRadius()) / 20);
-    int nextGridYTop = static_cast<int>((nextY - shape.getRadius()) / 20);
+    Vector2i grid(static_cast<int>(newPos.x / 20), static_cast<int>(newPos.y / 20));
+    Vector2i nextGridRight(static_cast<int>((nextPos.x + shape.getRadius()) / 20), grid.y);
+    Vector2i nextGridLeft(static_cast<int>((nextPos.x - shape.getRadius()) / 20), grid.y);
+    Vector2i nextGridBottom(grid.x, static_cast<int>((nextPos.y + shape.getRadius()) / 20));
+    Vector2i nextGridTop(grid.x, static_cast<int>((nextPos.y - shape.getRadius()) / 20));
 
     // Boundary check: Ensure grid coordinates are within bounds
-    if (nextGridXRight < 0 || nextGridXLeft >= map.geWidth() || nextGridYBottom < 0 || nextGridYTop >= map.getHeight()) {
+    if (nextGridRight.x < 0 || nextGridLeft.x >= map.getWidth() || nextGridBottom.y < 0 || nextGridTop.y >= map.getHeight()) {
         return;  // Don't move if it would go out of bounds
     }
 
     // X-axis movement: Only move if there are no obstacles and within bounds
-    bool canMoveX = (!map.isObstacle(nextGridXRight, gridY) && !map.isObstacle(nextGridXLeft, gridY));
-    bool canMoveY = (!map.isObstacle(gridX, nextGridYBottom) && !map.isObstacle(gridX, nextGridYTop));
+    bool canMoveX = (!map.isObstacle(Vector2i(nextGridRight.x, grid.y)) && !map.isObstacle(Vector2i(nextGridLeft.x, grid.y)));
+    bool canMoveY = (!map.isObstacle(Vector2i(grid.x, nextGridBottom.y)) && !map.isObstacle(Vector2i(grid.x, nextGridTop.y)));
 
     // Now move in both axes, attempting both x and y, but respecting obstacles
-    if (abs(deltaX) > abs(deltaY)) {
+    if (abs(delta.x) > abs(delta.y)) {
         if (canMoveX) {
-            newPos.x = nextX;
+            newPos.x = nextPos.x;
         } else if (canMoveY) {
-            newPos.y = nextY;
+            newPos.y = nextPos.y;
         }
     } else {
         if (canMoveY) {
-            newPos.y = nextY;
+            newPos.y = nextPos.y;
         } else if (canMoveX) {
-            newPos.x = nextX;
+            newPos.x = nextPos.x;
         }
     }
 
     // Update the NPC's position and shape
     position = newPos;
     shape.setPosition(position);
+}
+
+Vector2f NPC::getPosition(){
+    return position;
 }
 
 void NPC::takeDamage() {

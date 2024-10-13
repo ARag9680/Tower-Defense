@@ -2,7 +2,7 @@
 #include <iostream>
 #include <SFML/Window/Mouse.hpp>
 #include "Map.h"
-#include "Tower.h"
+#include "Towers.h"
 
 using namespace std; 
 
@@ -32,16 +32,16 @@ void Player::setPlayerPosition(Vector2f Spawn){
 
 Player::~Player() {}
 
-void Player::buildTower() {
-        Tower* tower = new Tower(20, 1.0f, sf::Vector2f(200, 200)); // test tower to pass to function 
+// void Player::buildTower() {
+//         Tower* tower = new Tower(20, 1.0f, sf::Vector2f(200, 200)); // test tower to pass to function 
 
-        if (tower != nullptr) {
-            maps->placeTower(*tower, 5, 5); 
-            //currently causes seg fault
-        }
+//         if (tower != nullptr) {
+//             maps->placeTower(*tower, Vector2f); 
+//             //currently causes seg fault
+//         }
 
-        //currency = currency - tower price    
-}
+//         //currency = currency - tower price    
+// }
 
 void Player::sellTower() {
     //remove tower from vector

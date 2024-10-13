@@ -1,12 +1,23 @@
 #include "Main_Menu.h"
 
+
+//-----------------Consructor and Destructors------------------// 
 Main_Menu::Main_Menu(){
     initalizeButtons(); // As soon as the file is run created all buttons that are needed.
     cout << "Main Menu Objects Initalized" << endl;
 }
-bool Main_Menu::isGameStarted(){
-    return gameStarted;
+
+Main_Menu::~Main_Menu(){
+        // Destructor to clean up memory
+    if (maps) {
+        delete maps;  // Free the memory allocated to map
+        maps = nullptr;
+    }    
+        buttons.clear();
 }
+
+//-----------------Buttons (Ownership and Creation)------------------// 
+
 void Main_Menu::initalizeButtons(){ // Run in the default constructor.
     Button Start_Game("Start Game", 100,80);
     Start_Game.loadFont("Arial.ttf");
@@ -20,9 +31,18 @@ void Main_Menu::initalizeButtons(){ // Run in the default constructor.
     cout << "Button 3 created" << endl;
 }
 
+void Main_Menu::draw(RenderWindow& window) {
+    cout << "Drawing Main Menu in Window" << endl;
+    for (auto& button : buttons) {
+        button.draw(window); // Call the draw function of the Button class
+    }
+}  
+
+
+//-----------------Map Functions (Ownership and Creation)------------------// 
 void Main_Menu::initalizeMap(){
     cout << "Map pointer array, size: " << maps << endl;
-    maps = new Map (20, 20);
+    maps = new Map (Vector2i (20, 20));
     cout<< "Map Initalized" <<endl;
     Creep example_creep(Vector2f(0,0));
     Elite example_elite(Vector2f(0, 30));
@@ -31,10 +51,32 @@ void Main_Menu::initalizeMap(){
     maps[0].spawnNPC(example_creep);
     maps[0].spawnNPC(example_elite);
     maps[0].spawnNPC(example_champion);
+    Tower tower(1,1,1,Vector2i(80, 80),100);
+    maps[0].placeTower(tower, Vector2i(10, 10));
 }
 
 Map& Main_Menu::getMaps() {
     return maps[0]; // Return a reference to the first map
+}
+
+void Main_Menu::drawMaps(RenderWindow& window){
+    if (maps) {
+        maps->display(window);  // Call the display method of the Map class
+    } else {
+        cerr << "Map not initialized!" << endl;
+    }
+}
+
+
+//-----------------User Interaction------------------//
+void Main_Menu::handleMouseHover(Vector2i mousePos) {
+    for (auto& button : buttons) {
+        if (button.isMouseOver(mousePos)) {
+            button.setColor(Color::Cyan); // Change color on hover
+        } else {
+            button.setColor(Color::Blue); // Default color
+        }
+    }
 }
 
 void Main_Menu::handleClick(Vector2i mousePos, Event mouseButtonPressed, RenderWindow& window){
@@ -73,34 +115,7 @@ void Main_Menu::handleClick(Vector2i mousePos, Event mouseButtonPressed, RenderW
     }
 }
 
-void Main_Menu::draw(RenderWindow& window) {
-    cout << "Drawing Main Menu in Window" << endl;
-    for (auto& button : buttons) {
-        button.draw(window); // Call the draw function of the Button class
-    }
-}  
-void Main_Menu::drawMaps(RenderWindow& window){
-    if (maps) {
-        maps->display(window);  // Call the display method of the Map class
-    } else {
-        cerr << "Map not initialized!" << endl;
-    }
-}
-void Main_Menu::handleMouseHover(Vector2i mousePos) {
-    for (auto& button : buttons) {
-        if (button.isMouseOver(mousePos)) {
-            button.setColor(Color::Cyan); // Change color on hover
-        } else {
-            button.setColor(Color::Blue); // Default color
-        }
-    }
+bool Main_Menu::isGameStarted(){
+    return gameStarted;
 }
 
-Main_Menu::~Main_Menu(){
-        // Destructor to clean up memory
-    if (maps) {
-        delete maps;  // Free the memory allocated to map
-        maps = nullptr;
-    }    
-        buttons.clear();
-}

@@ -3,7 +3,7 @@
 
 #include <string>
 #include "Map.h"
-#include "Tower.h"
+#include "Towers.h"
 using namespace std; 
 
 class Player {
@@ -24,7 +24,7 @@ class Player {
         int getCurrency(); 
         string getName(); 
 
-        void buildTower(); 
+        //void buildTower(); 
         
         Vector2f getPlayerPosition();
         void setPlayerPosition(Vector2f Spawn);

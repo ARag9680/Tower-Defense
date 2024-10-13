@@ -9,7 +9,7 @@
 #include "Button.h"
 #include "Map.h"
 #include "NPC.h"
-#include "Tower.h"
+#include "Towers.h"
 #include "Player.h"
 #include "PlayerController.h"
 #include "Player.h"
@@ -33,18 +33,17 @@ class Main_Menu{
     public:
         Main_Menu();
 
-        bool isGameStarted();
-        
         void handleClick(Vector2i mousePos, Event mouseButtonPressed, RenderWindow& window);
         void handleMouseHover(Vector2i mousePos);
+        
+        void initalizeButtons();
+        void initalizeMap();
 
         void draw(RenderWindow& window);
         void drawMaps(RenderWindow& window);
-
         Map& getMaps();
 
-        void initalizeButtons();
-        void initalizeMap();
+        bool isGameStarted();
 
         ~Main_Menu();
 };

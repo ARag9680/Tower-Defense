@@ -25,6 +25,7 @@ public:
     void draw(RenderWindow& window);
     int getHealth() const;
     int getValue() const;
+    Vector2f getPosition();
     ~NPC();
 };
 
