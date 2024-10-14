@@ -24,9 +24,9 @@ class PlayerController {
             this->waitForClick = waitForClick; 
         }
 
-        void initializeInput(Player player, Map& maps); 
-        void leftMousePressed(Player player, Map& maps); //Detect left click
-        void rightMousePressed(Player player, Map& maps); //Detect right click
+        void initializeInput(Player player, Map& maps, RenderWindow& window); 
+        void leftMousePressed(Player player, Map& maps, RenderWindow& window); //Detect left click
+        void rightMousePressed(Player player, Map& maps, RenderWindow& window); //Detect right click
 
 };
 

@@ -34,15 +34,16 @@ int main(){
 
         //Draw objects onto the screen
         if (Main_Window.isGameStarted()) {  // This is a bool tracking whether the game has started before drawing
-            cout<< "Drawing Maps" <<endl;
+            //cout<< "Drawing Maps here" <<endl;
 
             Main_Window.drawMaps(window, player, clock);  //  Draw the map after Start game has been pressed.
 
-            playerController.initializeInput(player, Main_Window.getMaps()); //Activate left/right click for user interaction 
-
+            playerController.initializeInput(player, Main_Window.getMaps(), window); //Activate left/right click for user interaction 
+            
             for (std::vector<NPC>::iterator npc_it = Main_Window.getMaps().getNPCs().begin(); npc_it != Main_Window.getMaps().getNPCs().end(); ++npc_it) {
                 npc_it->move(Main_Window.getMaps() , player.getPlayerPosition());
             }
+            
             
         } else {
             Main_Window.draw(window);  // Draw the main menu (buttons) if game is not started.

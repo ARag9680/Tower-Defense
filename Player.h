@@ -27,7 +27,7 @@ class Player {
         int getCurrency(); 
         string getName(); 
 
-        void buildTower(Map& maps); 
+        void buildTower(Vector2i position, Map& maps); 
         
         Vector2f getPlayerPosition();
         void setPlayerPosition(Vector2f Spawn);

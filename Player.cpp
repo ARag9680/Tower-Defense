@@ -32,12 +32,12 @@ void Player::setPlayerPosition(Vector2f Spawn){
 
 Player::~Player() {}
 
-void Player::buildTower(Map& maps) {
+void Player::buildTower(Vector2i position, Map& maps) {
         Tower tower(1,10,1,Vector2i(120, 120),10000); //Test tower object 
 
         maps.placeTower(tower, Vector2i(10, 10)); //Call placeTower from Map, adds to tower vector 
 
-        cout << "Function Called Successfuly" << endl; 
+        //cout << "Function Called Successfuly" << endl; 
 
         //currency = currency - tower price    
 }
