@@ -32,28 +32,16 @@ void Player::setPlayerPosition(Vector2f Spawn){
 
 Player::~Player() {}
 
-<<<<<<< HEAD
 // void Player::buildTower() {
 //         Tower* tower = new Tower(20, 1.0f, sf::Vector2f(200, 200)); // test tower to pass to function 
-=======
-void Player::buildTower(Vector2i position, Map& maps) {
-        Tower tower(1,10,1,Vector2i(120, 120),10000); //Test tower object 
->>>>>>> refs/remotes/origin/Alt_Test
 
 //         if (tower != nullptr) {
 //             maps->placeTower(*tower, Vector2f); 
 //             //currently causes seg fault
 //         }
 
-<<<<<<< HEAD
 //         //currency = currency - tower price    
 // }
-=======
-        //cout << "Function Called Successfuly" << endl; 
-
-        //currency = currency - tower price    
-}
->>>>>>> refs/remotes/origin/Alt_Test
 
 void Player::sellTower() {
     //remove tower from vector

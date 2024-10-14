@@ -24,11 +24,7 @@ class Player {
         int getCurrency(); 
         string getName(); 
 
-<<<<<<< HEAD
         //void buildTower(); 
-=======
-        void buildTower(Vector2i position, Map& maps); 
->>>>>>> refs/remotes/origin/Alt_Test
         
         Vector2f getPlayerPosition();
         void setPlayerPosition(Vector2f Spawn);

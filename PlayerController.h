@@ -23,15 +23,9 @@ class PlayerController {
         //     this->waitForClick = waitForClick; 
         // }
 
-<<<<<<< HEAD
         // void initializeInput(Player player); 
         // // void leftMousePressed(Player player); //Detect left click
         // void rightMousePressed(Player player); //Detect right click
-=======
-        void initializeInput(Player player, Map& maps, RenderWindow& window); 
-        void leftMousePressed(Player player, Map& maps, RenderWindow& window); //Detect left click
-        void rightMousePressed(Player player, Map& maps, RenderWindow& window); //Detect right click
->>>>>>> refs/remotes/origin/Alt_Test
 
 };
 
