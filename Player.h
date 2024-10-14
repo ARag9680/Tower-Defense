@@ -20,11 +20,11 @@ class Player {
         ~Player(); //Default deconstructor 
 
         //Get value of health, currency and name
-        int getHealth(); 
-        int getCurrency(); 
+        int getHealth() const; 
+        int getCurrency() const; 
         string getName(); 
 
-        //void buildTower(); 
+        void buildTower(Vector2i position); 
         
         Vector2f getPlayerPosition();
         void setPlayerPosition(Vector2f Spawn);

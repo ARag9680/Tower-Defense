@@ -32,7 +32,7 @@ void Main_Menu::initalizeButtons(){ // Run in the default constructor.
 }
 
 void Main_Menu::draw(RenderWindow& window) {
-    cout << "Drawing Main Menu in Window" << endl;
+    // cout << "Drawing Main Menu in Window" << endl;
     for (auto& button : buttons) {
         button.draw(window); // Call the draw function of the Button class
     }
@@ -52,7 +52,7 @@ void Main_Menu::initalizeMap(){
     maps[0].spawnNPC(example_elite);
     maps[0].spawnNPC(example_champion);
     Tower tower(1,1,1,Vector2i(80, 80),100);
-    maps[0].placeTower(tower, Vector2i(10, 10));
+    maps[0].placeTower(tower);
 }
 
 Map& Main_Menu::getMaps() {

@@ -20,6 +20,10 @@ int Tower::getCost(){
     return cost; 
 }
 
+Vector2i Tower::getPosition(){
+    return position;
+}
+
 // Draw a line from the tower to the NPC (for visual representation of attack)
 void Tower::drawAttackLine(RenderWindow& window, NPC& npc) {
     if (isWithinRange(npc)) {
@@ -37,7 +41,7 @@ void Tower::placeOnMap(Vector2i newPosition) {
         }
 
 // Deal damage to NPC and increase player's money if the NPC's health reaches zero
-void Tower::dealDamage(NPC& npc, int& playerMoney) {
+void Tower::dealDamage(NPC& npc, int playerMoney) {
     if (isWithinRange(npc)) {
         npc.takeDamage();
         if (npc.getHealth() <= 0) {

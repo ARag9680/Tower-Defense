@@ -28,8 +28,9 @@ protected:
 public:
     Tower(int damage, float attackSpeed, int cost, Vector2i position, int range);
 
-    void dealDamage(NPC& npc, int& playerMoney);  // Now takes NPC and playerMoney
+    void dealDamage(NPC& npc, int playerMoney);  // Now takes NPC and playerMoney
     int getCost();
+    Vector2i getPosition();
     
     void placeOnMap(Vector2i newPosition);
     void draw(RenderWindow& window);

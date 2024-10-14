@@ -64,8 +64,12 @@ vector<NPC>& Map::getNPCs() {
     return npcs;
 }
 
-void Map::placeTower(Tower tower, Vector2i position) {
-    if (canPlaceTower(position)) {
+vector<Tower>& Map::getTowers() {
+  return towers;
+}
+
+void Map::placeTower(Tower tower) {
+    if (canPlaceTower(tower.getPosition())) {
         towers.push_back(tower);
     }
 }
@@ -92,7 +96,7 @@ void Map::display(RenderWindow &window) {
         tower_it->draw(window);
         for (std::vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end(); npc_it++){
             if (tower_it->isWithinRange(*npc_it)) {
-                tower_it->drawAttackLine(window, *npc_it);// Optionally display towers
+                tower_it->drawAttackLine(window, *npc_it);
             }
         }
     }
