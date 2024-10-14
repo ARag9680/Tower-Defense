@@ -64,9 +64,11 @@ vector<NPC>& Map::getNPCs() {
 }
 
 void Map::placeTower(Tower tower, Vector2i position) {
+    cout << "Tower Placed!" << endl; 
+
     if (canPlaceTower(position)) {
         towers.push_back(tower);
-        cout << towers.size() <<endl;
+        cout << "Total Towers" << towers.size() <<endl;
     }
 }
 

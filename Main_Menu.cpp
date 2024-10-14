@@ -52,7 +52,7 @@ void Main_Menu::initalizeMap(){
     maps[0].spawnNPC(example_elite);
     maps[0].spawnNPC(example_champion);
     Tower tower(1,10,1,Vector2i(120, 120),10000);
-    maps[0].placeTower(tower, Vector2i(10, 10));
+    maps[0].placeTower(tower, Vector2i(15, 15));
     
 }
 

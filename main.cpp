@@ -6,9 +6,12 @@ int main(){
     cout << "SFML Window Drawn" << endl;
     //Create Main Menu;
     Main_Menu Main_Window;
-    Player player(100, "Player1", 100);
+    //Create Player Instance
+    Player player(100, "Player1", 100, Main_Window.getMaps());
+    //Create Player Controller 
+    PlayerController playerController("Test");
 
-    player.setPlayerPosition(Vector2f(400,400));
+    player.setPlayerPosition(Vector2f(400,400)); //Sets starting pos of player 
     
     // Main game loop (runs as long as the window is open)
     while (window.isOpen())
@@ -31,17 +34,20 @@ int main(){
 
         //Draw objects onto the screen
         if (Main_Window.isGameStarted()) {  // This is a bool tracking whether the game has started before drawing
-            //cout<< "Drawing Maps" <<endl;
+            cout<< "Drawing Maps" <<endl;
+
             Main_Window.drawMaps(window, player, clock);  //  Draw the map after Start game has been pressed.
+
+            playerController.initializeInput(player, Main_Window.getMaps()); //Activate left/right click for user interaction 
+
             for (std::vector<NPC>::iterator npc_it = Main_Window.getMaps().getNPCs().begin(); npc_it != Main_Window.getMaps().getNPCs().end(); ++npc_it) {
                 npc_it->move(Main_Window.getMaps() , player.getPlayerPosition());
             }
+            
         } else {
             Main_Window.draw(window);  // Draw the main menu (buttons) if game is not started.
         }
         // Display what was drawn
-
-        
         window.display();
     }
 
