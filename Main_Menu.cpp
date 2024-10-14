@@ -32,7 +32,7 @@ void Main_Menu::initalizeButtons(){ // Run in the default constructor.
 }
 
 void Main_Menu::draw(RenderWindow& window) {
-    // cout << "Drawing Main Menu in Window" << endl;
+    //cout << "Drawing Main Menu in Window" << endl;
     for (auto& button : buttons) {
         button.draw(window); // Call the draw function of the Button class
     }
@@ -45,23 +45,24 @@ void Main_Menu::initalizeMap(){
     maps = new Map (Vector2i (20, 20));
     cout<< "Map Initalized" <<endl;
     Creep example_creep(Vector2f(0,0));
-    Elite example_elite(Vector2f(0, 30));
-    Champion example_champion(Vector2f(50, 0), 2);
+    Creep example_elite(Vector2f(0, 30));
+    Creep example_champion(Vector2f(50, 0));
     cout << "Enemies Initalized"<< endl;
     maps[0].spawnNPC(example_creep);
     maps[0].spawnNPC(example_elite);
     maps[0].spawnNPC(example_champion);
-    Tower tower(1,1,1,Vector2i(80, 80),100);
-    maps[0].placeTower(tower);
+    Tower tower(1,10,1,Vector2i(120, 120),10000);
+    maps[0].placeTower(tower, Vector2i(10, 10));
+    
 }
 
 Map& Main_Menu::getMaps() {
     return maps[0]; // Return a reference to the first map
 }
 
-void Main_Menu::drawMaps(RenderWindow& window){
+void Main_Menu::drawMaps(RenderWindow& window, Player& player, Clock& clock){
     if (maps) {
-        maps->display(window);  // Call the display method of the Map class
+        maps->display(window, player, clock);  // Call the display method of the Map class
     } else {
         cerr << "Map not initialized!" << endl;
     }

@@ -7,33 +7,29 @@ using namespace sf;
 
 PlayerController::PlayerController() {}; 
 
-PlayerController::PlayerController(std::string name) : name(name) {}
-int PlayerController::getWaitForClick() { return waitForClick; }
-void PlayerController::setWaitForClick(int waitForClick) {
-    this->waitForClick = waitForClick; 
-}
+PlayerController::PlayerController(std::string name) : name(name) {}; 
 
-void PlayerController::initializeInput(Player player) { 
-    leftMousePressed(player); 
-    rightMousePressed(player); 
-}
+// void PlayerController::initializeInput(Player player) { 
+//     leftMousePressed(player); 
+//     rightMousePressed(player); 
+// }
 
-void PlayerController::leftMousePressed(Player player) {
-    setWaitForClick(1); // can be set to 0 to not allow clicking
-    if (Mouse::isButtonPressed(sf::Mouse::Left) && getWaitForClick() == 1) {
-        player.buildTower(Mouse::getPosition() - Vector2i(100,100)); // builds tower at position relative to top left of screen 
+// void PlayerController::leftMousePressed(Player player) {
+//     setWaitForClick(1); //can be set to 0 to not allow clicking
+//     if (Mouse::isButtonPressed(sf::Mouse::Left) && getWaitForClick() == 1) {
+//         player.buildTower(); 
 
-        cout << "Mouse Pressed!" << endl;
-       
-    } 
-}
+//         cout << "Mouse Pressed!" << endl;
         
-void PlayerController::rightMousePressed(Player player) {
-    setWaitForClick(1); // can be set to 0 to not allow clicking
-    if (Mouse::isButtonPressed(sf::Mouse::Right) && getWaitForClick() == 1) {
-        player.sellTower(); 
-
-        cout << "Mouse 2 Pressed!" << endl;
+//     } 
+// }
         
-    } 
-}
+// void PlayerController::rightMousePressed(Player player) {
+//     setWaitForClick(1); //can be set to 0 to not allow clicking
+//     if (Mouse::isButtonPressed(sf::Mouse::Right) && getWaitForClick() == 1) {
+//         player.sellTower(); 
+
+//         cout << "Mouse 2 Pressed!" << endl;
+        
+//     } 
+// }

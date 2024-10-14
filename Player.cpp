@@ -14,11 +14,11 @@ std::string Player::getName() {
     return name; 
 }
 
-int Player::getHealth() const {
+int Player::getHealth() {
     return health; 
 }
 
-int Player::getCurrency() const {
+int Player::getCurrency() {
     return currency;    
 }
 
@@ -32,20 +32,16 @@ void Player::setPlayerPosition(Vector2f Spawn){
 
 Player::~Player() {}
 
-void Player::buildTower(Vector2i position) {
+// void Player::buildTower() {
+//         Tower* tower = new Tower(20, 1.0f, sf::Vector2f(200, 200)); // test tower to pass to function 
 
-    std::cout << "Attempting to build tower at: " << position.x << ", " << position.y << std::endl;
+//         if (tower != nullptr) {
+//             maps->placeTower(*tower, Vector2f); 
+//             //currently causes seg fault
+//         }
 
-
-    Tower* tower = new Tower(20, 1.0f, 50, position, 50); // test tower to pass to function 
-    cout << "Tower built" << endl;
-    if (tower != nullptr) {
-        maps->placeTower(*tower); 
-        //currently causes seg fault
-    }
-
-    currency = currency - tower->getCost();
-}
+//         //currency = currency - tower price    
+// }
 
 void Player::sellTower() {
     //remove tower from vector

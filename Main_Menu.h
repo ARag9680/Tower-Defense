@@ -40,7 +40,7 @@ class Main_Menu{
         void initalizeMap();
 
         void draw(RenderWindow& window);
-        void drawMaps(RenderWindow& window);
+        void drawMaps(RenderWindow& window, Player& player, Clock& clock);
         Map& getMaps();
 
         bool isGameStarted();

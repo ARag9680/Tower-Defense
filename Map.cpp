@@ -12,7 +12,6 @@ Map::Map(Vector2i tiles) : tiles(tiles) {
             grid[i][j] = false;  // Initialize all cells as paths (false = path, true = obstacle)
         }
     }
-
     grid[5][5] = true;
     grid[10][10] = true;
     grid[15][15] = true;
@@ -34,7 +33,7 @@ void Map::loadMap(RenderWindow &window) {
     RectangleShape tile(Vector2f(20, 20));
     tile.setOutlineThickness(1);            
     tile.setOutlineColor(Color::Black);    
-
+    
     for (int i = 0; i < tiles.y; i++) {
         for (int j = 0; j < tiles.x; j++) {
             tile.setFillColor(grid[i][j] ? Color::Red : Color::Green);
@@ -64,18 +63,15 @@ vector<NPC>& Map::getNPCs() {
     return npcs;
 }
 
-vector<Tower>& Map::getTowers() {
-  return towers;
-}
-
-void Map::placeTower(Tower tower) {
-    if (canPlaceTower(tower.getPosition())) {
+void Map::placeTower(Tower tower, Vector2i position) {
+    if (canPlaceTower(position)) {
         towers.push_back(tower);
+        cout << towers.size() <<endl;
     }
 }
 
 void Map::checkDeadNPCs(Player& player) {
-    std::vector<NPC>::iterator it = npcs.begin();
+    vector<NPC>::iterator it = npcs.begin();
     while (it != npcs.end()) {
         if (it->getHealth() <= 0) {
             player.addMoney(it->getValue());
@@ -86,18 +82,24 @@ void Map::checkDeadNPCs(Player& player) {
     }
 }
 
-void Map::display(RenderWindow &window) {
+void Map::display(RenderWindow &window, Player& player, Clock& clock) {
     loadMap(window);
-    for (std::vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end(); ++npc_it) {
-        npc_it->draw(window);
+    for (vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end();) {
+        if (npc_it->getHealth() <= 0) {
+            // Remove NPC from the vector if health is 0 or less
+            npc_it = npcs.erase(npc_it);  // erase returns the next iterator
+        } else {
+            // Draw the NPC if still alive
+            npc_it->draw(window);
+            ++npc_it;
+        }
     }
-
-    for (std::vector<Tower>::iterator tower_it = towers.begin(); tower_it != towers.end(); ++tower_it) {
+    deltaTime = clock.restart().asSeconds();
+    for (vector<Tower>::iterator tower_it = towers.begin(); tower_it != towers.end(); ++tower_it) {
         tower_it->draw(window);
-        for (std::vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end(); npc_it++){
-            if (tower_it->isWithinRange(*npc_it)) {
-                tower_it->drawAttackLine(window, *npc_it);
-            }
+        for (vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end(); npc_it++){
+            tower_it->drawAttackLine(window, *npc_it);// Optionally display towers
+            tower_it->dealDamage(*npc_it, player, deltaTime);
         }
     }
 }

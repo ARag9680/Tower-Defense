@@ -1,6 +1,7 @@
+#include <iostream>
 #include "Champion.h"
-
-Champion::Champion(Vector2f pos, float shieldHP) : NPC(3, 1, 3, pos, 200), shieldHP(shieldHP) {
+using namespace std;
+Champion::Champion(Vector2f pos, float shieldHP) : NPC(3, 0.5, 3, pos, 200), shieldHP(shieldHP) {
     shape.setFillColor(Color::Yellow);
 }
 
@@ -10,4 +11,5 @@ void Champion::takeDamage() {
     } else{
         this->health -= 1;
     }
+    cout << "Champ took damage" << endl;
 }

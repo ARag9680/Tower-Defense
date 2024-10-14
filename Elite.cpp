@@ -1,6 +1,8 @@
 #include "Elite.h"
+#include <iostream>
+using namespace std;
 
-Elite::Elite(Vector2f pos) : NPC(2, 0.6, 2, pos, 100)   {
+Elite::Elite(Vector2f pos) : NPC(2, 0.3, 2, pos, 100)   {
     shape.setFillColor(Color::Magenta);
 }
 
@@ -12,4 +14,5 @@ void Elite::takeDamage() {
   if (this->health < 0) {
     this->health = 0;
   }  // Health cannot be negative
+  cout << "Elite took damage" << endl;
 }

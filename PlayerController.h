@@ -15,13 +15,17 @@ class PlayerController {
         PlayerController(); //Default constructor 
         PlayerController(std::string name); //Player Controller Constructor, creates instance of player
 
-        int getWaitForClick();
+        // int getWaitForClick() {
+        //     return waitForClick; 
+        // }
 
-        void setWaitForClick(int waitForClick);
+        // int setWaitForClick(int waitForClick) {
+        //     this->waitForClick = waitForClick; 
+        // }
 
-        void initializeInput(Player player); 
-        void leftMousePressed(Player player); //Detect left click
-        void rightMousePressed(Player player); //Detect right click
+        // void initializeInput(Player player); 
+        // // void leftMousePressed(Player player); //Detect left click
+        // void rightMousePressed(Player player); //Detect right click
 
 };
 

@@ -2,7 +2,7 @@
 #include "NPC.h"  // Include NPC header for reference
 
 Tower::Tower(int damage, float attackSpeed, int cost, Vector2i position, int range)
-: damage(damage), attackSpeed(attackSpeed), cost(cost), position(position), range(range) {
+: damage(damage), attackSpeed(1), cost(cost), position(position), range(range), timeSinceLastAttack(0.0f) {
     shape.setPosition(static_cast<float>(position.x), static_cast<float>(position.y));
     shape.setSize(Vector2f(20.0f, 20.0f));  // Arbitrary size for the tower
     shape.setFillColor(Color::Blue);
@@ -20,10 +20,6 @@ int Tower::getCost(){
     return cost; 
 }
 
-Vector2i Tower::getPosition(){
-    return position;
-}
-
 // Draw a line from the tower to the NPC (for visual representation of attack)
 void Tower::drawAttackLine(RenderWindow& window, NPC& npc) {
     if (isWithinRange(npc)) {
@@ -38,15 +34,27 @@ void Tower::drawAttackLine(RenderWindow& window, NPC& npc) {
 void Tower::placeOnMap(Vector2i newPosition) {
         position = newPosition;
         shape.setPosition(static_cast<float>(position.x), static_cast<float>(position.y));
-        }
+}
 
 // Deal damage to NPC and increase player's money if the NPC's health reaches zero
-void Tower::dealDamage(NPC& npc, int playerMoney) {
+void Tower::dealDamage(NPC& npc, Player& player, float deltaTime) {
     if (isWithinRange(npc)) {
-        npc.takeDamage();
-        if (npc.getHealth() <= 0) {
-            playerMoney += npc.getValue();
+        timeSinceLastAttack += deltaTime;
+
+        // Only attack if enough time has passed since last attack
+        if (timeSinceLastAttack >= 1.0f / attackSpeed) {
+            npc.takeDamage();  // Apply damage
+            timeSinceLastAttack = 0.0f;  // Reset the cooldown
+            
+            cout << "Tower deals damage. NPC health: " << npc.getHealth() << endl; // Debugging
+
+            if (npc.getHealth() <= 0) {
+                player.addMoney(npc.getValue());
+                cout << "NPC defeated! Player earns: " << npc.getValue() << " money." << endl; // Debugging
+            }
         }
+    } else {
+        cout << "NPC is out of range." << endl; // Debugging
     }
 }
 

@@ -19,6 +19,7 @@ private:
     vector<NPC> npcs;
     vector<Tower> towers;
     Vector2f player_spawn;
+    float deltaTime;
 
 public:
     Map(Vector2i tiles);
@@ -31,7 +32,7 @@ public:
     bool isObstacle(Vector2i tile);
     void spawnNPC(NPC npc);
     void placeTower(Tower tower, Vector2i position);
-    void display(RenderWindow &window);
+    void display(RenderWindow &window, Player& player, Clock& clock);
     void checkDeadNPCs(Player& player);  // Use Player reference for currency handling
 };
 

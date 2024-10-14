@@ -67,6 +67,7 @@ void NPC::takeDamage() {
     if (health <= 0) {
         health = 0;
     }
+    cout<< "NPC took damage" <<endl;
 }
 
 void NPC::draw(RenderWindow& window) {
@@ -74,10 +75,12 @@ void NPC::draw(RenderWindow& window) {
 }
 
 int NPC::getHealth() const {
+    cout<< "NPC health:" << health <<endl;
     return health;
 }
 
 int NPC::getValue() const {
+    cout<< "NPC value:" << value <<endl;
     return value;
 }
 
