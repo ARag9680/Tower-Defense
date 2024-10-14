@@ -6,20 +6,17 @@
 #include "Towers.h"
 using namespace std; 
 
-class Main_Menu; 
-
 class Player {
     private:
         int health; 
         std::string name; 
         int currency; 
         //std::vector<Tower> towers; 
+        Map *maps; 
         Vector2f playerPosition;
-        Map& maps;
-        //Map* maps; 
     public:
-       ///Player();  //Default constuctor 
-        Player(int health, std::string name, int currency, Map& maps);  //Player constructor - creates player with certian health, name and currency 
+        Player();  //Default constuctor 
+        Player(int health, std::string name, int currency);  //Player constructor - creates player with certian health, name and currency 
         ~Player(); //Default deconstructor 
 
         //Get value of health, currency and name
@@ -27,7 +24,7 @@ class Player {
         int getCurrency(); 
         string getName(); 
 
-        void buildTower(Map& maps); 
+        //void buildTower(); 
         
         Vector2f getPlayerPosition();
         void setPlayerPosition(Vector2f Spawn);

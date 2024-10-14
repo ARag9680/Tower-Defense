@@ -6,9 +6,9 @@
 
 using namespace std; 
 
-//Player::Player() {}
+Player::Player() {}
 
-Player::Player(int health, std::string name, int currency, Map& maps) : health(health), name(name), currency(currency), maps(maps) {}
+Player::Player(int health, std::string name, int currency) : health(health), name(name), currency(currency) {}
 
 std::string Player::getName() {
     return name; 
@@ -32,21 +32,23 @@ void Player::setPlayerPosition(Vector2f Spawn){
 
 Player::~Player() {}
 
-void Player::buildTower(Map& maps) {
-        Tower tower(1,10,1,Vector2i(120, 120),10000); //Test tower object 
+// void Player::buildTower() {
+//         Tower* tower = new Tower(20, 1.0f, sf::Vector2f(200, 200)); // test tower to pass to function 
 
-        maps.placeTower(tower, Vector2i(10, 10)); //Call placeTower from Map, adds to tower vector 
+//         if (tower != nullptr) {
+//             maps->placeTower(*tower, Vector2f); 
+//             //currently causes seg fault
+//         }
 
-        cout << "Function Called Successfuly" << endl; 
-
-        //currency = currency - tower price    
-}
+//         //currency = currency - tower price    
+// }
 
 void Player::sellTower() {
     //remove tower from vector
     //check removed tower
     //use switch to determime tower type and add currency as required
 }
+
 
 
 void Player::takeDamage(int damage) {

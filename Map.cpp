@@ -3,19 +3,25 @@
 #include "Towers.h"
 #include "Player.h"
 
+enum TileState {
+    PATH = 0,        // Path where NPCs walk
+    OBSTACLE = 1,    // Obstacle where towers can be placed
+    OCCUPIED = 2     // A tower has already been placed on this tile
+};
+
 // Constructor
 Map::Map(Vector2i tiles) : tiles(tiles) {
-    grid = new bool*[tiles.y];
+    grid = new int*[tiles.y];
     for (int i = 0; i < tiles.y; i++) {
-        grid[i] = new bool[tiles.x];
+        grid[i] = new int[tiles.x];
         for (int j = 0; j < tiles.x; j++) {
-            grid[i][j] = false;  // Initialize all cells as paths (false = path, true = obstacle)
+            grid[i][j] = PATH;  // Initialize all cells as paths
         }
     }
-    grid[5][5] = true;
-    grid[10][10] = true;
-    grid[15][15] = true;
-    grid[14][15] = true;
+    grid[5][5] = OBSTACLE;  // Example obstacles
+    grid[10][10] = OBSTACLE;
+    grid[15][15] = OBSTACLE;
+    grid[14][15] = OBSTACLE;
 }
 
 // Destructor
@@ -29,31 +35,46 @@ Map::~Map() {
 int Map::getWidth(){ return this->tiles.x; };
 int Map::getHeight(){ return this->tiles.y; };
 
-void Map::loadMap(RenderWindow &window) {
+void Map::loadMap(RenderWindow &window, Vector2i mousePos) {
     RectangleShape tile(Vector2f(20, 20));
-    tile.setOutlineThickness(1);            
-    tile.setOutlineColor(Color::Black);    
-    
+    tile.setOutlineThickness(1);
+    tile.setOutlineColor(Color::Black);
+
     for (int i = 0; i < tiles.y; i++) {
         for (int j = 0; j < tiles.x; j++) {
-            tile.setFillColor(grid[i][j] ? Color::Red : Color::Green);
-            tile.setPosition(j * 20, i * 20);
+            Vector2f tilePos(j * 20, i * 20);
+            tile.setPosition(tilePos);
+
+            // Check if mouse is hovering over this tile
+            if (tile.getGlobalBounds().contains(mousePos.x, mousePos.y)) {
+                // Check if it's an obstacle
+                if (grid[i][j]) {
+                    tile.setFillColor(Color::Cyan); // Indicate tower can be placed here (hover)
+                } else {
+                    tile.setFillColor(Color::Yellow); // Can't place tower here (hover)
+                }
+            } else {
+                // Default color based on obstacle or not
+                tile.setFillColor(grid[i][j] ? Color::Red : Color::Green);
+            }
+            
             window.draw(tile);
         }
     }
 }
 
 bool Map::canPlaceTower(Vector2i position) {
-    if (position.x < 0 || position.x >= tiles.y || position.y < 0 || position.y >= tiles.x || !grid[position.x][position.y])
-        return false;
-    return true;
+    if (position.x < 0 || position.x >= tiles.x || position.y < 0 || position.y >= tiles.y)
+        return false;  // Out of bounds
+    // Check if the tile is an obstacle and not already occupied
+    return (grid[position.y][position.x] == OBSTACLE);
 }
-
 bool Map::isObstacle(Vector2i tile) {
     if (tile.x < 0 || tile.x >= tiles.x || tile.y < 0 || tile.y >= tiles.y)
         return false;
     return (grid[tile.x+1][tile.y+1] || grid[tile.x][tile.y+1] || grid[tile.x+1][tile.y]);
 }
+
 
 void Map::spawnNPC(NPC npc) {
     npcs.push_back(npc);
@@ -63,12 +84,13 @@ vector<NPC>& Map::getNPCs() {
     return npcs;
 }
 
-void Map::placeTower(Tower tower, Vector2i position) {
-    cout << "Tower Placed!" << endl; 
-
+void Map::placeTower(Tower& tower, Vector2i position) {
     if (canPlaceTower(position)) {
         towers.push_back(tower);
-        cout << "Total Towers" << towers.size() <<endl;
+        grid[position.y][position.x] = OCCUPIED;  // Mark the tile as occupied
+        cout << "Tower placed at: " << position.x << ", " << position.y << endl;
+    } else {
+        cout << "Failed to place tower" << endl;
     }
 }
 
@@ -84,8 +106,9 @@ void Map::checkDeadNPCs(Player& player) {
     }
 }
 
-void Map::display(RenderWindow &window, Player& player, Clock& clock) {
-    loadMap(window);
+void Map::display(RenderWindow &window, Player& player, Clock& clock, Vector2i mousePos, Event mouseButtonPressed) {
+    loadMap(window, mousePos);
+    handleInput(player, mousePos, mouseButtonPressed);
     for (vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end();) {
         if (npc_it->getHealth() <= 0) {
             // Remove NPC from the vector if health is 0 or less
@@ -102,6 +125,22 @@ void Map::display(RenderWindow &window, Player& player, Clock& clock) {
         for (vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end(); npc_it++){
             tower_it->drawAttackLine(window, *npc_it);// Optionally display towers
             tower_it->dealDamage(*npc_it, player, deltaTime);
+        }
+    }
+}
+
+void Map::handleInput(Player& player, Vector2i mousePos, Event mouseButtonPressed) {
+    if (mouseButtonPressed.type == Event::MouseButtonPressed && mouseButtonPressed.mouseButton.button == Mouse::Left) {
+        // Check if we can place a tower at this position
+        Vector2i gridPos(mousePos.x / 20, mousePos.y / 20);
+        if (canPlaceTower(gridPos)) {
+            Vector2i towerPos(gridPos.x * 20, gridPos.y * 20);
+            Tower tower(1,10,1,towerPos,10000);
+            placeTower(tower, gridPos);
+            cout<< "tower placed at: " << mousePos.x << "." << mousePos.y <<endl;
+        }
+        else{
+            cout<< "failed to place tower" <<endl;
         }
     }
 }

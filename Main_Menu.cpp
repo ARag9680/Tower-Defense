@@ -47,12 +47,18 @@ void Main_Menu::initalizeMap(){
     Creep example_creep(Vector2f(0,0));
     Creep example_elite(Vector2f(0, 30));
     Creep example_champion(Vector2f(50, 0));
+    Creep example_creep1(Vector2f(0,0));
+    Creep example_elite1(Vector2f(0, 30));
+    Creep example_champion1(Vector2f(50, 0));
     cout << "Enemies Initalized"<< endl;
     maps[0].spawnNPC(example_creep);
     maps[0].spawnNPC(example_elite);
     maps[0].spawnNPC(example_champion);
-    Tower tower(1,10,1,Vector2i(120, 120),10000);
-    maps[0].placeTower(tower, Vector2i(10, 10));
+    maps[0].spawnNPC(example_creep1);
+    maps[0].spawnNPC(example_elite1);
+    maps[0].spawnNPC(example_champion1);
+    //Tower tower(1,10,1,Vector2i(120, 120),10000);
+    //maps[0].placeTower(tower, Vector2i(10, 10));
     
 }
 
@@ -60,9 +66,9 @@ Map& Main_Menu::getMaps() {
     return maps[0]; // Return a reference to the first map
 }
 
-void Main_Menu::drawMaps(RenderWindow& window, Player& player, Clock& clock){
+void Main_Menu::drawMaps(RenderWindow& window, Player& player, Clock& clock, Vector2i mousePos, Event mouseButtonPressed){
     if (maps) {
-        maps->display(window, player, clock);  // Call the display method of the Map class
+        maps->display(window, player, clock, mousePos, mouseButtonPressed);  // Call the display method of the Map class
     } else {
         cerr << "Map not initialized!" << endl;
     }

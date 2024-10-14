@@ -15,7 +15,7 @@ using namespace std;
 class Map {
 private:
     Vector2i tiles;
-    bool** grid;  // 2D dynamically allocated grid
+    int** grid;  // 2D dynamically allocated grid
     vector<NPC> npcs;
     vector<Tower> towers;
     Vector2f player_spawn;
@@ -27,13 +27,14 @@ public:
     vector<NPC>& getNPCs();
     int getWidth();
     int getHeight();
-    void loadMap(RenderWindow &window);
+    void loadMap(RenderWindow &window, Vector2i mousePos);
     bool canPlaceTower(Vector2i position);
     bool isObstacle(Vector2i tile);
     void spawnNPC(NPC npc);
-    void placeTower(Tower tower, Vector2i position);
-    void display(RenderWindow &window, Player& player, Clock& clock);
+    void placeTower(Tower& tower, Vector2i position);
+    void display(RenderWindow &window, Player& player, Clock& clock, Vector2i mousePos, Event mouseButtonPressed);
     void checkDeadNPCs(Player& player);  // Use Player reference for currency handling
+    void handleInput(Player& player, Vector2i mousePos, Event mouseButtonPressed);
 };
 
 #endif
