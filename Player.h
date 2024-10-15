@@ -22,9 +22,9 @@ class Player {
         //Get value of health, currency and name
         int getHealth(); 
         int getCurrency(); 
-        string getName(); 
+        string getName();
 
-        //void buildTower(); 
+        void drawPlayerIndicator(sf::RenderWindow* win);
         
         Vector2f getPlayerPosition();
         void setPlayerPosition(Vector2f Spawn);
@@ -39,4 +39,4 @@ class Player {
 
 }; 
 
-#endif 
+#endif

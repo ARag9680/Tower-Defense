@@ -113,6 +113,7 @@ void Map::checkDeadNPCs(Player& player) {
 void Map::display(RenderWindow &window, Player& player, Clock& clock, Vector2i mousePos, Event mouseButtonPressed) {
     loadMap(window, mousePos);
     handleInput(player, mousePos, mouseButtonPressed);
+
     for (vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end();) {
         if (npc_it->getHealth() <= 0) {
             // Remove NPC from the vector if health is 0 or less
@@ -135,12 +136,15 @@ void Map::display(RenderWindow &window, Player& player, Clock& clock, Vector2i m
 
 void Map::handleInput(Player& player, Vector2i mousePos, Event mouseButtonPressed) {
     if (mouseButtonPressed.type == Event::MouseButtonPressed && mouseButtonPressed.mouseButton.button == Mouse::Left) {
-        // Check if we can place a tower at this position
+        // Check if we can place a tower at this position and the player can afford it
         Vector2i gridPos(mousePos.x / 20, mousePos.y / 20);
-        if (canPlaceTower(gridPos)) {
+        if (canPlaceTower(gridPos) && player.canAfford()) {
+            
             Vector2i towerPos(gridPos.x * 20, gridPos.y * 20);
             Tower tower(1,10,1,towerPos,10000);
+            
             placeTower(tower, gridPos);
+            player.addMoney(-1); // Subtract 1 currency to build tower
             std::cout<< "tower placed at: " << mousePos.x << "." << mousePos.y <<endl;
         }
         else{

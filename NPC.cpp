@@ -75,12 +75,10 @@ void NPC::draw(RenderWindow& window) {
 }
 
 int NPC::getHealth() const {
-    cout<< "NPC health:" << health <<endl;
     return health;
 }
 
 int NPC::getValue() const {
-    cout<< "NPC value:" << value <<endl;
     return value;
 }
 

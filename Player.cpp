@@ -14,6 +14,32 @@ std::string Player::getName() {
     return name; 
 }
 
+void Player::drawPlayerIndicator(sf::RenderWindow* win) {
+    // Creates player indicator
+    sf::CircleShape playerShape;
+    playerShape.setFillColor(Color::White);
+    playerShape.setOutlineColor(Color::Black);
+    playerShape.setRadius(10.0f);
+    playerShape.setPosition(getPlayerPosition());
+
+    sf::Font font;
+    if (!font.loadFromFile("Arial.ttf")) {
+        return;  // Error loading font
+    }
+
+    // Create player text
+    sf::Text playerText;
+    playerText.setFont(font);
+    playerText.setString("P");
+    playerText.setCharacterSize(20);
+    playerText.setFillColor(sf::Color::Black);
+    playerText.setPosition(getPlayerPosition() + Vector2f(2, 0));
+
+    (*win).draw(playerShape);
+    (*win).draw(playerText);
+    (*win).display();
+}
+
 int Player::getHealth() {
     return health; 
 }
