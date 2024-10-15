@@ -9,6 +9,8 @@ int main(){
     Player player(100, "Player1", 100);
 
     player.setPlayerPosition(Vector2f(400,400));
+
+    Main_Window.initalizeMap();
     
     // Main game loop (runs as long as the window is open)
     while (window.isOpen())

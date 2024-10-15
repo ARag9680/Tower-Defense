@@ -43,6 +43,7 @@ void Main_Menu::draw(RenderWindow& window) {
 void Main_Menu::initalizeMap(){
     cout << "Map pointer array, size: " << maps << endl;
     maps = new Map (Vector2i (20, 20));
+    maps->readGridFromFile("grid_test.csv");
     cout<< "Map Initalized" <<endl;
     Creep example_creep(Vector2f(0,0));
     Creep example_elite(Vector2f(0, 30));

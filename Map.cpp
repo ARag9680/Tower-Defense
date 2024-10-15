@@ -3,6 +3,10 @@
 #include "Towers.h"
 #include "Player.h"
 
+#include <fstream>
+#include <sstream>
+#include <iostream>
+
 enum TileState {
     PATH = 0,        // Path where NPCs walk
     OBSTACLE = 1,    // Obstacle where towers can be placed
@@ -69,12 +73,12 @@ bool Map::canPlaceTower(Vector2i position) {
     // Check if the tile is an obstacle and not already occupied
     return (grid[position.y][position.x] == OBSTACLE);
 }
+
 bool Map::isObstacle(Vector2i tile) {
     if (tile.x < 0 || tile.x >= tiles.x || tile.y < 0 || tile.y >= tiles.y)
         return false;
     return (grid[tile.x+1][tile.y+1] || grid[tile.x][tile.y+1] || grid[tile.x+1][tile.y]);
 }
-
 
 void Map::spawnNPC(NPC npc) {
     npcs.push_back(npc);
@@ -88,9 +92,9 @@ void Map::placeTower(Tower& tower, Vector2i position) {
     if (canPlaceTower(position)) {
         towers.push_back(tower);
         grid[position.y][position.x] = OCCUPIED;  // Mark the tile as occupied
-        cout << "Tower placed at: " << position.x << ", " << position.y << endl;
+        std::cout << "Tower placed at: " << position.x << ", " << position.y << endl;
     } else {
-        cout << "Failed to place tower" << endl;
+        std::cout << "Failed to place tower" << endl;
     }
 }
 
@@ -137,10 +141,55 @@ void Map::handleInput(Player& player, Vector2i mousePos, Event mouseButtonPresse
             Vector2i towerPos(gridPos.x * 20, gridPos.y * 20);
             Tower tower(1,10,1,towerPos,10000);
             placeTower(tower, gridPos);
-            cout<< "tower placed at: " << mousePos.x << "." << mousePos.y <<endl;
+            std::cout<< "tower placed at: " << mousePos.x << "." << mousePos.y <<endl;
         }
         else{
-            cout<< "failed to place tower" <<endl;
+            std::cout<< "failed to place tower" <<endl;
         }
     }
+}
+
+void Map::readGridFromFile(const std::string& filename) {
+    // Reads map data from csv file of 0s,1s,2s (PATH, OBSTACLE, OCCUPIED)
+    
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error: Could not open file." << std::endl;
+        return;
+    }
+
+    std::string line = "";
+    int row = 0;
+
+    // Read the file line by line
+    while (std::getline(file, line) && row < getHeight()) {
+        std::stringstream ss(line);
+        std::string cell;
+        int col = 0;
+
+        // Parse each cell (0, 1, 2) and populate the grid
+        while (std::getline(ss, cell, ',') && col < getWidth()) {
+            std::getline(ss, cell, ',');
+            int value = std::stoi(cell);  // Convert string to int
+
+            switch (value) {
+                case 0:
+                    grid[row][col] = PATH;
+                    break;
+                case 1:
+                    grid[row][col] = OBSTACLE;
+                    break;
+                case 2:
+                    grid[row][col] = OCCUPIED;
+                    break;
+                default:
+                    std::cerr << "Invalid value in CSV: " << value << std::endl;
+                    break;
+            }
+            col++;
+        }
+        row++;
+    }
+
+    file.close();
 }

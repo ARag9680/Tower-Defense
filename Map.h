@@ -35,6 +35,7 @@ public:
     void display(RenderWindow &window, Player& player, Clock& clock, Vector2i mousePos, Event mouseButtonPressed);
     void checkDeadNPCs(Player& player);  // Use Player reference for currency handling
     void handleInput(Player& player, Vector2i mousePos, Event mouseButtonPressed);
+    void readGridFromFile(const std::string& filename);
 };
 
 #endif
