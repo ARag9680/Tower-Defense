@@ -4,6 +4,7 @@
 #include <string>
 #include "Towers.h"
 using namespace std;
+using namespace sf; 
 
 class Map; // forward declaration of Map
 
