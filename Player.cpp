@@ -35,9 +35,8 @@ void Player::drawPlayerIndicator(sf::RenderWindow* win) {
     playerText.setFillColor(sf::Color::Black);
     playerText.setPosition(getPlayerPosition() + Vector2f(2, 0));
 
-    (*win).draw(playerShape);
-    (*win).draw(playerText);
-    (*win).display();
+    win->draw(playerShape);
+    win->draw(playerText);
 }
 
 int Player::getHealth() {

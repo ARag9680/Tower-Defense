@@ -2,7 +2,7 @@
 
 int main(){
     // Create a window object
-    RenderWindow window(VideoMode(400,400), "Tower Defense");
+    RenderWindow window(VideoMode(400,500), "Tower Defense");
     // Sets window to middle of the screen
     window.setPosition(Vector2i((sf::VideoMode::getDesktopMode().width - window.getSize().x)/2, 
         (sf::VideoMode::getDesktopMode().height - window.getSize().y)/2));
@@ -38,11 +38,12 @@ int main(){
         //Draw objects onto the screen
         if (Main_Window.isGameStarted()) {  // This is a bool tracking whether the game has started before drawing
                    
-            Main_Window.drawMaps(window, player, clock, mousePos, event);  //  Draw the map after Start game has been pressed.
+            Main_Window.drawMaps(window, player, clock, mousePos, event);//  Draw the map after Start game has been pressed.
+            player.drawPlayerIndicator(&window);  
             for (std::vector<NPC>::iterator npc_it = Main_Window.getMaps().getNPCs().begin(); npc_it != Main_Window.getMaps().getNPCs().end(); ++npc_it) {
                 npc_it->move(Main_Window.getMaps() , player.getPlayerPosition());
             }
-            player.drawPlayerIndicator(&window);
+            
         } else {
             Main_Window.draw(window);  // Draw the main menu (buttons) if game is not started.
         }

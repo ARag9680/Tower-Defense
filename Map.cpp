@@ -26,6 +26,20 @@ Map::Map(Vector2i tiles) : tiles(tiles) {
     grid[10][10] = OBSTACLE;
     grid[15][15] = OBSTACLE;
     grid[14][15] = OBSTACLE;
+
+    Creep example_creep(Vector2f(0,0));
+    Elite example_elite(Vector2f(0, 30));
+    Champion example_champion(Vector2f(50, 0), 10);
+    Creep example_creep1(Vector2f(0,10));
+    Elite example_elite1(Vector2f(0, 20));
+    Champion example_champion1(Vector2f(40, 0), 10);
+    cout << "Enemies Initalized"<< endl;
+    this->spawnNPC(example_creep);
+    this->spawnNPC(example_elite);
+    this->spawnNPC(example_champion);
+    this->spawnNPC(example_creep1);
+    this->spawnNPC(example_elite1);
+    this->spawnNPC(example_champion1);
 }
 
 // Destructor
@@ -113,6 +127,7 @@ void Map::checkDeadNPCs(Player& player) {
 void Map::display(RenderWindow &window, Player& player, Clock& clock, Vector2i mousePos, Event mouseButtonPressed) {
     loadMap(window, mousePos);
     handleInput(player, mousePos, mouseButtonPressed);
+    player.drawPlayerIndicator(&window);
 
     for (vector<NPC>::iterator npc_it = npcs.begin(); npc_it != npcs.end();) {
         if (npc_it->getHealth() <= 0) {
@@ -132,6 +147,32 @@ void Map::display(RenderWindow &window, Player& player, Clock& clock, Vector2i m
             tower_it->dealDamage(*npc_it, player, deltaTime);
         }
     }
+
+    sf::Font font;
+    if (!font.loadFromFile("Arial.ttf")) {  // Load font for rendering text
+        std::cerr << "Error loading font" << std::endl;
+        return;
+    }
+
+    sf::Text healthText;
+    healthText.setFont(font);
+    healthText.setString("Health: " + std::to_string(player.getHealth()));
+    healthText.setCharacterSize(20);
+    healthText.setFillColor(sf::Color::Black);
+    healthText.setPosition(10, 410);  // Position below the grid
+
+    // Create a text object for player currency
+    sf::Text currencyText;
+    currencyText.setFont(font);
+    currencyText.setString("Currency: " + std::to_string(player.getCurrency()));
+    currencyText.setCharacterSize(20);
+    currencyText.setFillColor(sf::Color::Black);
+    currencyText.setPosition(10, 440);  // Position below the health text
+
+    // Draw the health and currency texts
+    window.draw(healthText);
+    window.draw(currencyText);
+
 }
 
 void Map::handleInput(Player& player, Vector2i mousePos, Event mouseButtonPressed) {
@@ -144,7 +185,7 @@ void Map::handleInput(Player& player, Vector2i mousePos, Event mouseButtonPresse
             Tower tower(1,10,1,towerPos,10000);
             
             placeTower(tower, gridPos);
-            player.addMoney(-1); // Subtract 1 currency to build tower
+            player.addMoney(-tower.getCost()); // Subtract 1 currency to build tower
             std::cout<< "tower placed at: " << mousePos.x << "." << mousePos.y <<endl;
         }
         else{

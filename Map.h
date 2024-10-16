@@ -4,10 +4,17 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "Creep.h"
+#include "Elite.h"
+#include "Champion.h"
+
 // Forward declarations to avoid #include cycles
 class NPC;
 class Tower;
 class Player;
+class Creep;
+class Elite;
+class Champion;
 
 using namespace sf;
 using namespace std;

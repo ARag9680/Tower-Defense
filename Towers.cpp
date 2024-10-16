@@ -2,7 +2,7 @@
 #include "NPC.h"  // Include NPC header for reference
 
 Tower::Tower(int damage, float attackSpeed, int cost, Vector2i position, int range)
-: damage(damage), attackSpeed(1), cost(cost), position(position), range(range), timeSinceLastAttack(0.0f) {
+: damage(damage), attackSpeed(1), cost(150), position(position), range(range), timeSinceLastAttack(0.0f) {
     shape.setPosition(static_cast<float>(position.x), static_cast<float>(position.y));
     shape.setSize(Vector2f(20.0f, 20.0f));  // Arbitrary size for the tower
     shape.setFillColor(Color::Blue);

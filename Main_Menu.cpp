@@ -45,21 +45,6 @@ void Main_Menu::initalizeMap(){
     maps = new Map (Vector2i (20, 20));
     maps->readGridFromFile("grid_test.csv");
     cout<< "Map Initalized" <<endl;
-    Creep example_creep(Vector2f(0,0));
-    Creep example_elite(Vector2f(0, 30));
-    Creep example_champion(Vector2f(50, 0));
-    Creep example_creep1(Vector2f(0,0));
-    Creep example_elite1(Vector2f(0, 30));
-    Creep example_champion1(Vector2f(50, 0));
-    cout << "Enemies Initalized"<< endl;
-    maps[0].spawnNPC(example_creep);
-    maps[0].spawnNPC(example_elite);
-    maps[0].spawnNPC(example_champion);
-    maps[0].spawnNPC(example_creep1);
-    maps[0].spawnNPC(example_elite1);
-    maps[0].spawnNPC(example_champion1);
-    //Tower tower(1,10,1,Vector2i(120, 120),10000);
-    //maps[0].placeTower(tower, Vector2i(10, 10));
     
 }
 
