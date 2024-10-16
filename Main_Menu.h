@@ -28,6 +28,9 @@ class Main_Menu{
         bool gameStarted;
         vector<Button> buttons;
         Map* maps;
+        bool showInstructionsImage;
+        Texture instructionsTexture;
+        Sprite instructionsSprite;
     public:
         Main_Menu();
 
