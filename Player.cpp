@@ -57,7 +57,7 @@ void Player::setPlayerPosition(Vector2f Spawn){
 
 Player::~Player() {}
 
-/*
+/* Code for towerplacement implemented in map file insted 
 void Player::buildTower() {
     Tower tower(1,10,1,Vector2i(120, 120),10000); //Test tower object 
 

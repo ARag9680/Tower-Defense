@@ -16,6 +16,7 @@ bool Tower::isWithinRange(NPC& npc) {
     return distance <= range;
 }
 
+//Return cost of tower 
 int Tower::getCost(){ 
     return cost; 
 }
@@ -58,6 +59,7 @@ void Tower::dealDamage(NPC& npc, Player& player, float deltaTime) {
     }
 }
 
+//Draw tower shape on map 
 void Tower::draw(RenderWindow& window) {
         window.draw(shape);
 }

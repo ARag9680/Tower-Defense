@@ -3,12 +3,13 @@
 
 #include "NPC.h"
 
+//Inhertance from NPC 
 class Champion : public NPC {
     private:
-        float shieldHP;
+        float shieldHP; //Prevents some damage being applied to NPC 
     public:
-        Champion(Vector2f pos, float shieldHP);
-        virtual void takeDamage() override;
+        Champion(Vector2f pos, float shieldHP); //constructor 
+        virtual void takeDamage() override; //Allows different types of NPCS to take varying amounts of damage when attacked 
 };
 
 #endif

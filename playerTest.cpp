@@ -3,6 +3,7 @@
 
 int main() {
 
+    //For player testing purposes 
     std::string playerName; 
     std::cout << "Enter player name" << std::endl; 
     std::cin >> playerName; 

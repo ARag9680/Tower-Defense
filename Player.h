@@ -12,7 +12,7 @@ class Player {
         std::string name; 
         int currency; 
         //std::vector<Tower> towers; 
-        Map *maps; 
+        Map *maps; //Reference to map
         Vector2f playerPosition;
     public:
         Player();  //Default constuctor 

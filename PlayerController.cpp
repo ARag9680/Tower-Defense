@@ -9,7 +9,7 @@ PlayerController::PlayerController() {};
 
 PlayerController::PlayerController(std::string name) : name(name) {}; 
 
-/*
+/* Logic implemented in map file 
 void PlayerController::initializeInput(Player player, Map& maps, RenderWindow& window) { 
     leftMousePressed(player, maps, window); 
     rightMousePressed(player, maps, window); 

@@ -23,8 +23,8 @@ class Map {
 private:
     Vector2i tiles;
     int** grid;  // 2D dynamically allocated grid
-    vector<NPC> npcs;
-    vector<Tower> towers;
+    vector<NPC> npcs; //vector to store NPCS 
+    vector<Tower> towers; //vector to store towers 
     Vector2f player_spawn;
     float deltaTime;
 

@@ -81,6 +81,7 @@ void Map::loadMap(RenderWindow &window, Vector2i mousePos) {
     }
 }
 
+//Check if tower can be placed on map tile 
 bool Map::canPlaceTower(Vector2i position) {
     if (position.x < 0 || position.x >= tiles.x || position.y < 0 || position.y >= tiles.y)
         return false;  // Out of bounds
@@ -88,6 +89,7 @@ bool Map::canPlaceTower(Vector2i position) {
     return (grid[position.y][position.x] == OBSTACLE);
 }
 
+//Returns whether a map tile is an obstacle 
 bool Map::isObstacle(Vector2i tile) {
     if (tile.x < 0 || tile.x >= tiles.x || tile.y < 0 || tile.y >= tiles.y)
         return true;
