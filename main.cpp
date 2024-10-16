@@ -42,6 +42,9 @@ int main(){
             player.drawPlayerIndicator(&window);  
             for (std::vector<NPC>::iterator npc_it = Main_Window.getMaps().getNPCs().begin(); npc_it != Main_Window.getMaps().getNPCs().end(); ++npc_it) {
                 npc_it->move(Main_Window.getMaps() , player.getPlayerPosition());
+                if (npc_it->getPosition() == player.getPlayerPosition()){
+                    npc_it->dealDamage(&player);
+                }
             }
             
         } else {

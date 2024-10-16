@@ -1,6 +1,7 @@
 #ifndef NPC_H
 #define NPC_H
 
+#include "Player.h"
 #include <SFML/Graphics.hpp>
 #include <string>
 
@@ -28,6 +29,7 @@ public:
     int getHealth() const;
     int getValue() const;
     Vector2f getPosition();
+    void dealDamage(Player* player);
     ~NPC();
 };
 

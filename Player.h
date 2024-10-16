@@ -2,9 +2,10 @@
 #define PLAYER_H
 
 #include <string>
-#include "Map.h"
 #include "Towers.h"
-using namespace std; 
+using namespace std;
+
+class Map; // forward declaration of Map
 
 class Player {
     private:
@@ -12,7 +13,7 @@ class Player {
         std::string name; 
         int currency; 
         //std::vector<Tower> towers; 
-        Map *maps; //Reference to map
+        Map* maps; //Reference to map
         Vector2f playerPosition;
     public:
         Player();  //Default constuctor 
@@ -28,6 +29,7 @@ class Player {
         
         Vector2f getPlayerPosition();
         void setPlayerPosition(Vector2f Spawn);
+        void setHealth( int health);
 
         void sellTower(); 
 

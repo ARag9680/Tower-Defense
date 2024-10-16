@@ -55,6 +55,8 @@ void Player::setPlayerPosition(Vector2f Spawn){
     this->playerPosition = Spawn;
 }
 
+void Player::setHealth(int health) {this->health = health;}
+
 Player::~Player() {}
 
 /* Code for towerplacement implemented in map file insted 

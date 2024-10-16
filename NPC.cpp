@@ -49,6 +49,10 @@ Vector2f NPC::getPosition(){
     return position;
 }
 
+void NPC::dealDamage(Player* player) {
+    player->setHealth(player->getHealth() - this->damage);
+}
+
 void NPC::takeDamage() {
     health -= 1;
     if (health <= 0) {
