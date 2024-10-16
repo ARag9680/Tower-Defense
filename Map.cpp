@@ -90,8 +90,8 @@ bool Map::canPlaceTower(Vector2i position) {
 
 bool Map::isObstacle(Vector2i tile) {
     if (tile.x < 0 || tile.x >= tiles.x || tile.y < 0 || tile.y >= tiles.y)
-        return false;
-    return (grid[tile.x+1][tile.y+1] || grid[tile.x][tile.y+1] || grid[tile.x+1][tile.y]);
+        return true;
+    return (grid[tile.y][tile.x] == OBSTACLE) || (grid[tile.y][tile.x] == OCCUPIED);
 }
 
 void Map::spawnNPC(NPC npc) {
